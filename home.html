@@ -38,7 +38,7 @@
     <!-- External CSS File  -->
     <link rel="stylesheet" href="" />
   </head>
-  <body>
+  <body class="bg-[#F8FAFC] min-h-screen">
 
     <!-- Nav-Bar -->
     <section class="navbar bg-base-100 shadow-sm">
@@ -74,7 +74,59 @@
 </div>
 </section>
 
+<!-- Filter-Button-Section -->
+ <section class="bg-white w-11/12 mx-auto shadow-sm mt-15">
+<div class="p-5 gap-[8px]">
+        <button
+          id="filter-btn"
+          onclick="toggleStyle('filter-btn')"
+          class="btn btn-sm rounded-md bg-[#4A00FF] text-white"
+        >
+          All
+        </button>
+
+        <button
+          id="interview-filter-btn"
+          onclick="toggleStyle('interview-filter-btn')"
+          class="btn btn-sm rounded-md bg-[#4A00FF] text-white p-3"
+        >
+          Open
+        </button>
+
+        <button
+          id="rejected-filter-btn"
+          onclick="toggleStyle('rejected-filter-btn')"
+          class="btn btn-sm rounded-md bg-[#4A00FF] text-white"
+        >
+          Closed
+        </button>
+      </div>
+</section>
+
+<!-- Issue-Countr-Section -->
+<section class="bg-white p-5 mt-4 w-11/12 mx-auto">
+  <main class="flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div>
+        <img class="bg-[#ECE4FF] p-2 rounded-full" src="assets/Aperture.png" alt="">
+      </div>
+      <div>
+        <h3 class="font-semibold text-[20px]">50 Issues</h3>
+        <p class="text-[#64748B]">Track and manage your project issues</p>
+      </div>
+  </div>
+  <div class="flex items-center">
+    <img src="assets/Ellipse 2.png" alt="">
+    <span class="pl-1 pr-3">Open</span>
+    <img src="assets/Ellipse 1.png" alt="">         
+    <span class="pl-1 ">Closed</span>         
+  </div>
+  </main>     
+</section>
+
+<!-- Card-Section -->
 
 
+<script src="index.js"></script>
   </body>
   </html>
