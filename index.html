@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home || GitHub Issue Tracker</title>
+
+    <!-- Tailwind + Daisy UI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Font Awesome icon CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Geist Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External CSS File  -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-[#F8FAFC] min-h-screen pt-20">
+    <!-- Login form -->
+    
+    <main class=" bg-white py-10 rounded-lg shadow-md w-11/12 mx-auto max-w-[520px]">
+      <div
+        class="w-11/12 mx-auto text-center flex-col justify-center items-center space-y-1"
+      >
+        <div class="flex justify-center items-center">
+          <img class="" src="assets/github-logo.png" alt="Github-png" />
+        </div>
+        <h1>GitHub Issues Tracker</h1>
+        <p>Sign in to manage your issues</p>
+      </div>
+   <section class="flex flex-col items-center mt-6 w-11/12 mx-auto space-y-4">
+
+  <div class="w-full flex justify-center">
+    <div class="w-full max-w-md">
+      <label class="input validator w-full flex items-center">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </g>
+        </svg>
+
+        <input
+          type="text"
+          class="w-full"
+          placeholder="Username"
+        />
+      </label>
+      <p class="mt-1 text-[#4A00FF95]">Default: admin</p>
+    </div>
+  </div>
+
+  <div class="w-full flex justify-center">
+    <div class="w-full max-w-md">
+      <label class="input validator w-full flex items-center">
+        <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <g
+      stroke-linejoin="round"
+      stroke-linecap="round"
+      stroke-width="2.5"
+      fill="none"
+      stroke="currentColor"
+    >
+      <path
+        d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+      ></path>
+      <circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle>
+    </g>
+  </svg>
+
+        <input
+          type="password"
+          class="w-full"
+          placeholder="Password"
+        />
+      </label>
+      <p class="mt-1 text-[#4A00FF95]">Default: admin123</p>
+    </div>
+  </div>
+
+  <div class="w-full flex justify-center">
+    <button class="btn text-white bg-[#4A00FF] w-full max-w-md">
+      Login
+    </button>
+</section>
+<div class="w-full max-w-[450px] mx-auto mt-7">
+  <div class="divider">OR</div>
+</div>
+<section class="text-center w-11/12 mx-auto mt-2 flex flex-col justify-center items-center">
+  <p class="text-gray-400 mb-2">Demo Credentials:</p>
+  <div class="text-center bg-[#F8FAFC] w-full max-w-[450px] px-5 py-3">
+    <p><span class="font-semibold">Username:</span> admin</p>
+    <p><span class="font-semibold">Password:</span> admin123</p>
+  </div>
+</section>
+    </main>
+  </body>
+</html>
