@@ -19,49 +19,45 @@ const loadCardInfo = async (id) => {
   const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
   const res = await fetch(url);
   const info = await res.json();
-  displayCardInfo(info.data)
+  displayCardInfo(info.data);
 };
-const displayCardInfo = (data) =>{
+const displayCardInfo = (data) => {
   console.log(data);
   const cardBox = document.getElementById("details-container");
 
-// Modal date & Time
-function formatDate(createdAt) {
-      const date = new Date(createdAt);
+  // Modal date & Time
+  function formatDate(createdAt) {
+    const date = new Date(createdAt);
 
-      const day = String(date.getDate()).padStart(2, "0");
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const year = date.getFullYear();
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
 
-      return `${day}-${month}-${year}`;
-    }
+    return `${day}-${month}-${year}`;
+  }
 
   // Modal label status function
- const labelButtons = data.labels
-  ?.map((label) => {
-    let colorClass = "bg-gray-200 text-gray-700";
+  const labelButtons = data.labels
+    ?.map((label) => {
+      let colorClass = "bg-gray-200 text-gray-700";
 
-    if (label.toLowerCase() === "bug")
-      colorClass = "bg-red-200 text-red-500";
-    else if (label.toLowerCase() === "help wanted")
-      colorClass = "bg-yellow-200 text-yellow-600";
-    else if (label.toLowerCase() === "enhancement")
-      colorClass = "bg-green-200 text-green-600";
+      if (label.toLowerCase() === "bug") colorClass = "bg-red-200 text-red-500";
+      else if (label.toLowerCase() === "help wanted")
+        colorClass = "bg-yellow-200 text-yellow-600";
+      else if (label.toLowerCase() === "enhancement")
+        colorClass = "bg-green-200 text-green-600";
 
-    return `<button class="rounded-full px-2 border-l border-r ${colorClass}">${label}</button>`;
-  })
-  .join(" ");
-
+      return `<button class="rounded-full px-2 border-l border-r ${colorClass}">${label}</button>`;
+    })
+    .join(" ");
 
   // Modal-Priority-Color
   const priorityColor =
-    data.priority === "high"
-      ? "text-red-500"
-      : data.priority === "medium"
-      ? "text-yellow-500"
-      : "text-green-500";
+    data.priority === "high" ? "text-red-500"
+    : data.priority === "medium" ? "text-yellow-500"
+    : "text-gray-500";
 
-  cardBox.innerHTML=` <div>
+  cardBox.innerHTML = ` <div>
     <h1 class="font-semibold text-[18px]">${data.title}</h1>
 
     <div class="text-[#64748B] mt-2">
@@ -79,7 +75,7 @@ function formatDate(createdAt) {
 
     <div class="flex justify-between">
     <div class="flex mt-2">
-      <p class="text-black font-semibold"><span class="text-gray-400">Assignee:</span>  ${data.assignee ? data.assignee: data.author}</p>
+      <p class="text-black font-semibold"><span class="text-gray-400">Assignee:</span>  ${data.assignee ? data.assignee : data.author}</p>
       </div>
       <div class="mt-2 font-semibold text-gray-400">
       <span>Priority-</span>
@@ -89,7 +85,7 @@ function formatDate(createdAt) {
     </div>
   </div>`;
   document.getElementById("my_modal_5").showModal();
-}
+};
 
 fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
   .then((res) => res.json())
@@ -163,13 +159,9 @@ function cardContainer(values) {
    <div class="divider divider-start -mx-3"></div>
   <div class="flex justify-between">
   <p class="text-[#64748B]"><span class="text-gray-800">Author:</span> ${value.author}</p>
-  
   </div>
-  
   <p>Date: ${formatDate(value.createdAt)}</p>
   </div>
-  
-
     `;
     container.appendChild(card);
   });
@@ -186,3 +178,24 @@ const displayFilter = (buttons) => {
     `;
   }
 };
+
+// search-function
+document.getElementById("search-btn").addEventListener("click", () => {
+  const input = document.getElementById("input-search");
+  const searchValue = input.value.trim().toLowerCase();
+  console.log(searchValue);
+  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+    .then((res) => res.json())
+    .then((data) => {
+      const allWords = data.data;
+      const filterWords = allWords.filter(
+        (item) =>
+          item.title.toLowerCase().includes(searchValue) ||
+          item.description.toLowerCase().includes(searchValue) ||
+          item.author.toLowerCase().includes(searchValue),
+      );
+      const container = document.getElementById("card-container");
+      container.innerHTML = "";
+      cardContainer(filterWords);
+    });
+});
