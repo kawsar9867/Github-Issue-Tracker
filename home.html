@@ -74,28 +74,22 @@
 </section>
 
 <!-- Filter-Button-Section -->
- <section class="bg-white w-10/12 mx-auto shadow-sm mt-15">
+ <section id="filter-buttons" class="bg-white w-10/12 mx-auto shadow-sm mt-15">
 <div class="p-5 gap-[8px]">
         <button
-          id="filter-btn"
-          onclick="toggleStyle('filter-btn')"
-          class="btn btn-sm rounded-md bg-[#4A00FF] text-white"
+          class="filter-btn btn btn-sm rounded-md bg-[#4A00FF] text-white"
         >
           All
         </button>
 
         <button
-          id="interview-filter-btn"
-          onclick="toggleStyle('interview-filter-btn')"
-          class="btn btn-sm rounded-md bg-[#4A00FF] text-white p-3"
+          class="filter-btn btn btn-sm rounded-md bg-[#4A00FF] text-white p-3"
         >
           Open
         </button>
 
         <button
-          id="rejected-filter-btn"
-          onclick="toggleStyle('rejected-filter-btn')"
-          class="btn btn-sm rounded-md bg-[#4A00FF] text-white"
+          class="filter-btn btn btn-sm rounded-md bg-[#4A00FF] text-white"
         >
           Closed
         </button>
@@ -128,6 +122,18 @@
 
 </section>
 
+<!-- Card-Modal -->
+<dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+     <div id="details-container">
+     </div>
+    <div class="modal-action justify-center">
+      <form method="dialog">
+        <button class=" bg-gradient-to-br from-red-400 to-red-600 text-white rounded-full px-2 shadow-lg hover:scale-110 hover:shadow-xl transition-transform duration-200 cursor-pointer">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 <script src="index.js"></script>
   </body>
   </html>
