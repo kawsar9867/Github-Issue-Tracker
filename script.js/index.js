@@ -3,16 +3,32 @@ let allBtn = document.getElementById("all-btn");
 let openBtn = document.getElementById("open-btn");
 let closeBtn = document.getElementById("close-btn");
 
+// Spinner function
+const manageSpinner = (status) => {
+  if (status === true) {
+    document.getElementById("spinner").classList.remove("hidden");
+    document.getElementById("card-container").classList.add("hidden");
+  } else {
+    document.getElementById("card-container").classList.remove("hidden");
+    document.getElementById("spinner").classList.add("hidden");
+  }
+};
 
+manageSpinner(true);
 fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
   .then((res) => res.json())
   .then((data) => {
     allIssues = data.data;
     cardContainer(allIssues);
+  })
+  .catch((err) => console.error(err))
+  .finally(() => {
+    // spinner hide after fetch completes
+    manageSpinner(false);
   });
 
-  // default All button active
-  window.addEventListener("DOMContentLoaded", () => {
+// default All button active
+window.addEventListener("DOMContentLoaded", () => {
   allBtn.classList.add("bg-primary", "text-white");
   openBtn.classList.remove("bg-primary", "text-white");
   openBtn.classList.add("bg-white", "text-[#64748B]");
@@ -98,10 +114,8 @@ function cardContainer(values) {
   const container = document.getElementById("card-container");
 
   // Filter-Issue-Updator
-  container.innerHTML="";
+  container.innerHTML = "";
   document.getElementById("issue-count").innerText = values.length + " Issues";
-
-
 
   values.forEach((value) => {
     // status-bar-color
@@ -188,40 +202,43 @@ const filterBtn = (btn) => {
   openBtn.classList.add("bg-white", "text-[#64748B]");
   closeBtn.classList.add("bg-white", "text-[#64748B]");
 
- if (btn === "all-btn") {
+  let status;
+  if (btn === "all-btn") {
     allBtn.classList.replace("bg-white", "bg-primary");
     allBtn.classList.replace("text-[#64748B]", "text-white");
-    buttonFilter("all");
+    status = "all";
   } else if (btn === "open-btn") {
     openBtn.classList.replace("bg-white", "bg-green-500");
     openBtn.classList.replace("text-[#64748B]", "text-white");
-    buttonFilter("open");
+    status = "open";
   } else if (btn === "close-btn") {
     closeBtn.classList.replace("bg-white", "bg-red-500");
     closeBtn.classList.replace("text-[#64748B]", "text-white");
-    buttonFilter("close");
+    status = "close";
   }
 
-// Filter-Functions
-if (btn === "all-btn") buttonFilter("all");
-  else if (btn === "open-btn") buttonFilter("open");
-  else if (btn === "close-btn") buttonFilter("close");
+  manageSpinner(true);
+
+  setTimeout(()=>{
+    buttonFilter(status);
+    manageSpinner(false);
+  },200);
 };
 
 // Filter-data-Update
 const buttonFilter = (status) => {
   let filtered = allIssues;
-
   if (status === "open") {
     filtered = allIssues.filter((issue) => issue.status === "open");
-  } 
-  else if (status === "close") {
+  } else if (status === "close") {
     filtered = allIssues.filter((issue) => issue.status === "closed");
+  }else if (status === "all"){
+    filtered = allIssues;
   }
 
   const container = document.getElementById("card-container");
-  container.innerHTML = ""; 
-  cardContainer(filtered);  
+  container.innerHTML = "";
+  cardContainer(filtered);
 };
 
 // search-function
@@ -239,4 +256,3 @@ document.getElementById("search-btn").addEventListener("click", () => {
   container.innerHTML = "";
   cardContainer(filterItems);
 });
-
