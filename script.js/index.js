@@ -176,7 +176,7 @@ function cardContainer(values) {
     <p class="text-sm text-gray-500 mt-1">${value.description}</p>
     <div class="mt-3">
   
-    <div class="mt-3 flex gap-2">
+    <div class="mt-3 flex  gap-1">
           ${labelButtons}
         </div>
     </div>
