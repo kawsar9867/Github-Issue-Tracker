@@ -1,18 +1,25 @@
-// Login function
-function login() {
-  let user = document.getElementById("userID").value;
-  let pass = document.getElementById("password").value;
+let allIssues = [];
+let allBtn = document.getElementById("all-btn");
+let openBtn = document.getElementById("open-btn");
+let closeBtn = document.getElementById("close-btn");
 
-  let correctUser = "admin";
-  let currectPass = "admin123";
 
-  if (user === correctUser && pass === currectPass) {
-    window.location.href = "home.html";
-    alert("Login Successful");
-  } else {
-    alert("User ID or Password Incorrect");
-  }
-}
+fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
+  .then((res) => res.json())
+  .then((data) => {
+    allIssues = data.data;
+    cardContainer(allIssues);
+  });
+
+  // default All button active
+  window.addEventListener("DOMContentLoaded", () => {
+  allBtn.classList.add("bg-primary", "text-white");
+  openBtn.classList.remove("bg-primary", "text-white");
+  openBtn.classList.add("bg-white", "text-[#64748B]");
+  closeBtn.classList.remove("bg-primary", "text-white");
+  closeBtn.classList.add("bg-white", "text-[#64748B]");
+  cardContainer(allIssues);
+});
 
 // Show-Modal-Card
 const loadCardInfo = async (id) => {
@@ -87,12 +94,15 @@ const displayCardInfo = (data) => {
   document.getElementById("my_modal_5").showModal();
 };
 
-fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-  .then((res) => res.json())
-  .then((data) => cardContainer(data.data));
-
 function cardContainer(values) {
   const container = document.getElementById("card-container");
+
+  // Filter-Issue-Updator
+  container.innerHTML="";
+  document.getElementById("issue-count").innerText = values.length + " Issues";
+
+
+
   values.forEach((value) => {
     // status-bar-color
     let borderColor;
@@ -106,12 +116,13 @@ function cardContainer(values) {
 
     // Priority-Color-change
     let priorityColor;
-    if (value.priority === "high") priorityColor = "bg-red-200 text-red-600";
-    else if (value.priority === "medium")
+    if (value.priority === "high") {
+      priorityColor = "bg-red-200 text-red-600";
+    } else if (value.priority === "medium") {
       priorityColor = "bg-yellow-200 text-yellow-600";
-    else if (value.priority === "low")
+    } else if (value.priority === "low") {
       priorityColor = "bg-gray-300 text-[9CA3AF]";
-
+    }
     // label-color correction & devided label
     const labelButtons = value.labels
       .map((label) => {
@@ -168,34 +179,64 @@ function cardContainer(values) {
 }
 
 // Filter-Buttons
-const displayFilter = (buttons) => {
-  const filterButtons = document.getElementById("filter-buttons");
-  filterButtons.innerHTML = "";
-  for (let button of buttons) {
-    const btnDiv = document.createElement("div");
-    btnDiv.innerHTML = `
-    
-    `;
+const filterBtn = (btn) => {
+  allBtn.classList.remove("bg-primary", "text-white");
+  openBtn.classList.remove("bg-primary", "text-white");
+  closeBtn.classList.remove("bg-primary", "text-white");
+
+  allBtn.classList.add("bg-white", "text-[#64748B]");
+  openBtn.classList.add("bg-white", "text-[#64748B]");
+  closeBtn.classList.add("bg-white", "text-[#64748B]");
+
+ if (btn === "all-btn") {
+    allBtn.classList.replace("bg-white", "bg-primary");
+    allBtn.classList.replace("text-[#64748B]", "text-white");
+    buttonFilter("all");
+  } else if (btn === "open-btn") {
+    openBtn.classList.replace("bg-white", "bg-green-500");
+    openBtn.classList.replace("text-[#64748B]", "text-white");
+    buttonFilter("open");
+  } else if (btn === "close-btn") {
+    closeBtn.classList.replace("bg-white", "bg-red-500");
+    closeBtn.classList.replace("text-[#64748B]", "text-white");
+    buttonFilter("close");
   }
+
+// Filter-Functions
+if (btn === "all-btn") buttonFilter("all");
+  else if (btn === "open-btn") buttonFilter("open");
+  else if (btn === "close-btn") buttonFilter("close");
+};
+
+// Filter-data-Update
+const buttonFilter = (status) => {
+  let filtered = allIssues;
+
+  if (status === "open") {
+    filtered = allIssues.filter((issue) => issue.status === "open");
+  } 
+  else if (status === "close") {
+    filtered = allIssues.filter((issue) => issue.status === "closed");
+  }
+
+  const container = document.getElementById("card-container");
+  container.innerHTML = ""; 
+  cardContainer(filtered);  
 };
 
 // search-function
 document.getElementById("search-btn").addEventListener("click", () => {
   const input = document.getElementById("input-search");
   const searchValue = input.value.trim().toLowerCase();
-  console.log(searchValue);
-  fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
-    .then((res) => res.json())
-    .then((data) => {
-      const allWords = data.data;
-      const filterWords = allWords.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchValue) ||
-          item.description.toLowerCase().includes(searchValue) ||
-          item.author.toLowerCase().includes(searchValue),
-      );
-      const container = document.getElementById("card-container");
-      container.innerHTML = "";
-      cardContainer(filterWords);
-    });
+
+  const filterItems = allIssues.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchValue) ||
+      item.description.toLowerCase().includes(searchValue) ||
+      item.author.toLowerCase().includes(searchValue),
+  );
+  const container = document.getElementById("card-container");
+  container.innerHTML = "";
+  cardContainer(filterItems);
 });
+
